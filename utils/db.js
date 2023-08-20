@@ -6,8 +6,11 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 
 const Users = {
-    getOne: async (id) => {
+    getOneById: async (id) => {
         return await supabase.from('users').select('*').eq('id', id)
+    },
+    getOneByDiscordId: async (discordId) => {
+        return await supabase.from('users').select('*').eq('discordId', discordId)
     },
     getAll: async () => {
         return await supabase.from('users').select('*')
@@ -24,8 +27,11 @@ const Users = {
 }
 
 const Channels = {
-    getOne: async (id) => {
+    getOneById: async (id) => {
         return await supabase.from('channels').select('*').eq('id', id)
+    },
+    getOneByDiscordId: async (discordId) => {
+        return await supabase.from('channels').select('*').eq('discordId', discordId)
     },
     getAll: async () => {
         return await supabase.from('channels').select('*')
