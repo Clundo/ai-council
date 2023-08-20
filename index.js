@@ -92,6 +92,7 @@ client.on(Events.MessageCreate, async message => {
 
         const reply = response.choices[0].message.content
 
+        console.log(response.choices)
         reply !== 'N/A' && webhook.send(reply)
     })
 })
