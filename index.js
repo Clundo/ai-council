@@ -1,6 +1,13 @@
-const { Client } = require('discord.js');
-const env = require('dotenv').config().parsed;
-const client = new Client();
+
+const { Client, GatewayIntentBits } = require('discord.js');
+const env = require('dotenv').config().parsed
+
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+    ]
+})
 
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
