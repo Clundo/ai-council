@@ -2,9 +2,12 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {Client, GatewayIntentBits, Events, Collection} = require('discord.js');
 const env = require('dotenv').config().parsed
+const OpenAi = require('openai')
 const {Users, Channels} = require('./utils/db')
 
 const BOT_TOKEN = env.BOT_TOKEN
+
+const openai = new OpenAi(env.AI_Key)
 
 const client = new Client({
     intents: [
@@ -72,7 +75,12 @@ client.on(Events.MessageCreate, async message => {
     const channel = await client.channels.fetch(message.channelId)
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
-            await webhook.send('Ahoi')
+        const prompt = `You are ${webhook.name} and should act like this persona. Please respond consisely and in character to the following message: ${message.content}`
+        const response = await openai.chat.completions.create({
+            messages: [{role: 'user', content: prompt}],
+            model: 'gpt-3.5-turbo'
+        })
+            console.log(response)
         }
     )
 })
