@@ -74,9 +74,9 @@ client.on(Events.MessageCreate, async message => {
         return {author: msg.author.username, content: msg.content}
     })).toString()
 
+    console.log(context)
     if(!humanPresent) return
 
-    console.log(context)
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.name) return
