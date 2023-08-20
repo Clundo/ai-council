@@ -4,7 +4,7 @@ const {Users, Channels} = require('../utils/db');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('listPersonas')
-        .setDescription('Lists all active personas of your AI council.')
+        .setDescription('Lists all active personas of your AI council.'),
     async execute(interaction) {
         let userData = await Users.getOneByDiscordId(interaction.user.id);
 
@@ -16,7 +16,7 @@ module.exports = {
             if (!channelData.data?.length) {
                 await interaction.reply('AI Council is not started in this channel.');
             } else {
-                
+
             }
         }
     }
