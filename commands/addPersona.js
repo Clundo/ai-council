@@ -16,7 +16,7 @@ module.exports = {
             if (!channelData.data?.length) {
                 await interaction.reply('AI Council is not started in this channel.');
             } else {
-
+                return
             }
         }
     }
