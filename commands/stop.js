@@ -8,15 +8,17 @@ module.exports = {
     async execute(interaction) {
         let userData = await Users.getOneByDiscordId(interaction.user.id);
 
-        user = userData.data ? userData.data[0] : null;
+        const user = userData.data ? userData.data[0] : null;
         if (!user) {
             await interaction.reply('Something went wrong. Please try again.');
         } else {
-            const channel = await Channels.getOneByDiscordId(interaction.channel.id);
-            if (!channel) {
+            const channelData = await Channels.getOneByDiscordId(interaction.channel.id);
+            if (!channelData.data?.length) {
+                await interaction.reply('AI Council is not started in this channel.');
+            } else {
                 await Channels.delete({discord_id: interaction.channel.id, user});
+                await interaction.reply('AI Council is removed from this channel.');
             }
-            await interaction.reply('AI Council is started. You can now add AI personas by using the /addPersona command!');
         }
     }
 }

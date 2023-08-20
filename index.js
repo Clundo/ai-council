@@ -45,7 +45,7 @@ client.on(Events.InteractionCreate, async interaction => {
         const userData = await Users.create({discord_id: interaction.user.id})
         user = userData.data
     }
-    
+
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
@@ -66,6 +66,11 @@ client.on(Events.InteractionCreate, async interaction => {
         }
     }
 });
+
+client.on(Events.MessageCreate, async message => {
+    const personas = await message.channel.fetchWebHooks()
+    console.log(personas)
+}
 
 client.login(BOT_TOKEN).then(() => {
     console.log('Logged in!')

@@ -11,15 +11,21 @@ module.exports = {
             userData = await Users.create({discord_id: interaction.user.id});
         }
 
-        user = userData.data ? userData.data[0] : null;
+        const user = userData.data ? userData.data[0] : null;
         if (!user) {
             await interaction.reply('Something went wrong. Please try again.');
         } else {
-            const channel = await Channels.getOneByDiscordId(interaction.channel.id);
-            if (!channel) {
-                await Channels.create({discord_id: interaction.channel.id, user});
+            let channelData = await Channels.getOneByDiscordId(interaction.channel.id);
+            if (!channelData.data?.length) {
+                channelData = await Channels.create({discord_id: interaction.channel.id, user});
             }
-            await interaction.reply('AI Council is started. You can now add AI personas by using the /addPersona command!');
+            const channel = channelData.data ? channelData.data[0] : null;
+            if (!channel) {
+                await interaction.reply('Something went wrong. Please try again.');
+            } else {
+                
+                await interaction.reply('AI Council is started. You can now add AI personas by using the /addPersona command!');
+            }
         }
     }
 }
