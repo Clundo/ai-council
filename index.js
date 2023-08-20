@@ -74,17 +74,20 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on(Events.MessageCreate, async message => {
-    if (message.author.bot) return
+
     const channel = await client.channels.fetch(message.channelId)
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
-            const prompt = `You are ${webhook.name} and should act like this persona. Please respond consisely and in character to the following message: ${message.content}`
+        if(webhook.name === message.user.name) return
+            const prompt = `You are ${webhook.name} and should act like this persona. The replies should be as brief as possible while still being in character. You may choose not to answer for any reason, for instance because there is no question in the prompt, because the information does not concern you or for any other reason you see fit. In that case, please just output "N/A". Here is the message you should reply to: ${message.content}`
             const response = await openai.chat.completions.create({
                 messages: [{role: 'user', content: prompt}],
                 model: 'gpt-3.5-turbo'
             })
-          
-        webhook.send(response.choices[0].message.content)
+
+        const reply = response.choices[0].message.content
+
+        reply !== 'N/A' && webhook.send(reply)
         }
     )
 })
