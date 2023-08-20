@@ -42,7 +42,7 @@ client.once(Events.ClientReady, async () => {
 client.on(Events.InteractionCreate, async interaction => {
     let user = await Users.getOne({id: {discordId: interaction.user.id}})
     if(!user) {
-        user = await Users.create({id: {discordId: interaction.user.id})
+        user = await Users.create({id: {discordId: interaction.user.id}})
     }
     console.log(user)
     if (!interaction.isChatInputCommand()) return;
