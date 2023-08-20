@@ -28,7 +28,7 @@ client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.on(Events.InteractionCreate, async interaction => {
+client.on(Events.MessageCreate, async interaction => {
     console.log(interaction.isChatInputCommand());
     if (!interaction.isChatInputCommand()) return;
 
