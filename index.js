@@ -38,8 +38,8 @@ client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.on(Events.InteractionCreate, async interaction => {
-    console.log('interaction', interaction)
+client.on(Events.MessageCreate, async message => {
+    console.log('interaction', message)
 })
 
 client.login(BOT_TOKEN).then(() => {
