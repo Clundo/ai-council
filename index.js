@@ -66,19 +66,22 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on(Events.MessageCreate, async message => {
-    if (message.author.bot) return
+
     const channel = await client.channels.fetch(message.channelId)
+    let humanPresent = false
     const context = await channel.messages.fetch({limit: 5}).then(messages => messages.reverse().reduce((acc, msg) => {
+        if(!msg.author.bot) humanPresent = true
         return acc + msg.author.username + ': ' + msg.content + '\n'
     }, ''))
 
+    if(!humanPresent) return
 
     console.log(context)
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.name) return
         const prompt = `
-        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Here is the last part of the conversation, which you may choose to use. You should not include your username in the reply : ${context}`
+        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Do not include your username in the reply. Here is the last part of the conversation. : ${context}`
 
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
