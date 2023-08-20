@@ -82,6 +82,7 @@ client.on(Events.MessageCreate, async message => {
 
     const webhooks = await channel.fetchWebhooks()
     while (webhooks.length > 0) {
+        console.log(webhooks)
         const webhookIndex = Math.floor(Math.random() * webhooks.length)
         setTimeout(async () => {
             if (webhook.name === message.author.username) return
