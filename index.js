@@ -68,7 +68,7 @@ client.on(Events.InteractionCreate, async interaction => {
 client.on(Events.MessageCreate, async message => {
     if (message.author.bot) return
     const channel = await client.channels.fetch(message.channelId)
-    const context = await channel.messages.fetch({limit: 5}).reverse().then(messages => messages.reduce((acc, msg) => {
+    const context = await channel.messages.fetch({limit: 5}).then(messages => messages.reverse().reduce((acc, msg) => {
         return acc + msg.author + ': ' + msg.content + '\n'
     }, ''))
 
