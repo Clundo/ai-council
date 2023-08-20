@@ -9,8 +9,8 @@ const Users = {
     getOneById: async (id) => {
         return await supabase.from('users').select('*').eq('id', id)
     },
-    getOneByDiscordId: async (discordId) => {
-        return await supabase.from('users').select('*').eq('discordId', discordId)
+    getOneByDiscordId: async (discord_id) => {
+        return await supabase.from('users').select('*').eq('discord_id', discord_id)
     },
     getAll: async () => {
         return await supabase.from('users').select('*')
@@ -30,8 +30,8 @@ const Channels = {
     getOneById: async (id) => {
         return await supabase.from('channels').select('*').eq('id', id)
     },
-    getOneByDiscordId: async (discordId) => {
-        return await supabase.from('channels').select('*').eq('discordId', discordId)
+    getOneByDiscordId: async (discord_id) => {
+        return await supabase.from('channels').select('*').eq('discordId', discord_id)
     },
     getAll: async () => {
         return await supabase.from('channels').select('*')
