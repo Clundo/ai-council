@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, GatewayIntentBits, Events, Collection } = require('discord.js');
+const {Client, GatewayIntentBits, Events, Collection} = require('discord.js');
 const env = require('dotenv').config().parsed
 const {Users, Channels} = require('./utils/db')
 
@@ -28,7 +28,7 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
-    if('data' in command && 'execute' in command) {
+    if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
     } else {
         console.log(`The command at ${filePath} does not have the required data and execute properties.`)
@@ -41,7 +41,7 @@ client.once(Events.ClientReady, async () => {
 
 client.on(Events.InteractionCreate, async interaction => {
     let {data: user} = await Users.getOneByDiscordId(interaction.user.id)
-    if(!user.length) {
+    if (!user.length) {
         const userData = await Users.create({discord_id: interaction.user.id})
         user = userData.data
     }
@@ -60,20 +60,21 @@ client.on(Events.InteractionCreate, async interaction => {
     } catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+            await interaction.followUp({content: 'There was an error while executing this command!', ephemeral: true});
         } else {
-            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+            await interaction.reply({content: 'There was an error while executing this command!', ephemeral: true});
         }
     }
 });
 
 client.on(Events.MessageCreate, async message => {
-    if(message.author.bot) return
+    if (message.author.bot) return
     const channel = await client.channels.fetch(message.channelId)
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
-        await webhook.send('Ahoi')
-    }
+            await webhook.send('Ahoi')
+        }
+    )
 })
 
 client.login(BOT_TOKEN).then(() => {
