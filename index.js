@@ -28,27 +28,11 @@ client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.on(Events.MessageCreate, async interaction => {
-    console.log(interaction.isChatInputCommand());
-    if (!interaction.isChatInputCommand()) return;
-
-    const command = interaction.client.commands.get(interaction.commandName);
-
-    if (!command) {
-        console.error(`No command matching ${interaction.commandName} was found.`);
-        return;
-    }
-
-    try {
-        await command.execute(interaction);
-    } catch (error) {
-        console.error(error);
-        if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-        } else {
-            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-        }
-    }
+client.on(Events.InteractionCreate, async interaction => {
+    console.log('interaction', interaction)
+}
+client.on(Events.MessageCreate, async message => {
+    console.log('message', message)
 })
 
 client.login(BOT_TOKEN).then(() => {
