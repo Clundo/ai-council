@@ -15,19 +15,8 @@ const Users = {
     getAll: async () => {
         return await supabase.from('users').select('*')
     },
-    create: async (user) => {
-        const toInsert = []
-        Object.keys(user).forEach(key => {
-            toInsert.push({key, user[key]})
-        })
-        return await supabase.from('users').insert(toInsert).select('*')
-    },
-    update: async (user) => {
-        const toInsert = []
-        Object.keys(user).forEach(key => {
-            key !== 'id'&& toInsert.push({key, user[key]})
-        })
-        return await supabase.from('users').update(toInsert).select('*').eq('id', user.id)
+    create: async ({discord_id}) => {
+        return await supabase.from('users').insert([{discord_id}]).select('*')
     },
     delete: async (id) => {
         return await supabase.from('users').delete().select('*').eq('id', id)
@@ -44,19 +33,8 @@ const Channels = {
     getAll: async () => {
         return await supabase.from('channels').select('*')
     },
-    create: async (channel) => {
-        const toInsert = []
-        Object.keys(channel).forEach(key => {
-            toInsert.push({key, channel[key]})
-        })
-        return await supabase.from('channels').insert(toInsert).select('*')
-    },
-    update: async (channel) => {
-        const toInsert = []
-        Object.keys(channel).forEach(key => {
-            key !== 'id'&& toInsert.push({key, channel[key]})
-        })
-        return await supabase.from('channels').update(toInsert).select('*').eq('id', channel.id)
+    create: async ({channel, user}) => {
+        return await supabase.from('channels').insert([{discord_id, owner_id: user.discord_id}]).select('*')
     },
     delete: async (id) => {
         return await supabase.from('channels').delete().select('*').eq('id', id)
