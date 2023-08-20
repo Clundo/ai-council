@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, GatewayIntentBits, Events, Collection } = require('discord.js');
 const env = require('dotenv').config().parsed
+const {Users, Channels} = require('./utils/db')
 
 const BOT_TOKEN = env.BOT_TOKEN
 
@@ -34,11 +35,16 @@ for (const file of commandFiles) {
     }
 }
 
-client.once(Events.ClientReady, () => {
+client.once(Events.ClientReady, async () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
+    let user = await Users.getOne({id: {discordId: interaction.user.id}})
+    if(!user) {
+        user = await Users.create({id: {discordId: interaction.user.id})
+    }
+    console.log(user)
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
