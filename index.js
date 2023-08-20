@@ -83,7 +83,7 @@ client.on(Events.MessageCreate, async message => {
                 messages: [{role: 'user', content: prompt}],
                 model: 'gpt-3.5-turbo'
             })
-            console.log(response)
+            console.log(response.choices)
         }
     )
 })
