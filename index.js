@@ -81,7 +81,7 @@ client.on(Events.MessageCreate, async message => {
     if (!humanPresent) return
 
     const webhooks = await channel.fetchWebhooks()
-    webhooks.forEach(webhook => {
+    webhooks.forEach((webhook, i) => {
         setTimeout(async () => {
             if (webhook.name === message.author.username) return
             const prompt = `
@@ -96,7 +96,7 @@ client.on(Events.MessageCreate, async message => {
             console.log(response.choices)
             reply !== 'N/A' && webhook.send(reply)
 
-        }, 2000)
+        }, 2000 * (i + 1))
     })
 
 })
