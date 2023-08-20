@@ -30,7 +30,7 @@ client.once(Events.ClientReady, () => {
 
 client.on(Events.InteractionCreate, async interaction => {
     console.log('interaction', interaction)
-}
+})
 client.on(Events.MessageCreate, async message => {
     console.log('message', message)
 })
