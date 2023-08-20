@@ -90,9 +90,9 @@ client.on(Events.MessageCreate, async message => {
             messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
         })
 
-        const reply = JSON.parse(response.choices[0].message.content)
+        const reply = response.choices[0].message.content
 
-        webhook.send(reply.content)
+        webhook.send(reply)
     })
 })
 
