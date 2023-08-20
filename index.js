@@ -81,20 +81,26 @@ client.on(Events.MessageCreate, async message => {
     if (!humanPresent) return
 
     const webhooks = await channel.fetchWebhooks()
-    webhooks.forEach(async webhook => {
-        if (webhook.name === message.author.username) return
-        const prompt = `
+    while (webhooks.length > 0) {
+        const webhookIndex = Math.floor(Math.random() * webhooks.length)
+        setTimeout(() => {
+            if (webhook.name === message.author.username) return
+            const prompt = `
         In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Respond with only the content part, not the author, and do not repeat previous replies unless specifically asked. Here is the last part of the conversation. : ${JSON.stringify(context)}`
 
-        const response = await openai.chat.completions.create({
-            messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
-        })
+            const response = await openai.chat.completions.create({
+                messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
+            })
 
-        const reply = response.choices[0].message.content
+            const reply = response.choices[0].message.content
 
-        console.log(response.choices)
-        reply !== 'N/A' && webhook.send(reply)
-    })
+            console.log(response.choices)
+            reply !== 'N/A' && webhook.send(reply)
+
+            webhooks.splice(webhookIndex, 1)
+        }, 2000)
+    }
+
 })
 
 client.login(BOT_TOKEN).then(() => {
