@@ -73,8 +73,8 @@ client.on(Events.MessageCreate, async message => {
     messages.reverse()
     const context = messages.reduce((acc, msg) => {
         if (!msg.author.bot) humanPresent = true
-        return acc + `{author: ${msg.author.username}, content: ${msg.content}`
-    }, '')
+        return acc.push({author: ${msg.author.username}, content: ${msg.content}}
+    }, [])
 
 
     console.log(context)
@@ -84,15 +84,15 @@ client.on(Events.MessageCreate, async message => {
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.name) return
         const prompt = `
-        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Respond in the following format: [{author: yourUserName, content: yourMessage}]. You may choose not to reply for any reason. In that case, output N/A as yourMessage. Here is the last part of the conversation. : [${context}]`
+        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Respond in the following format: [{author: yourUserName, content: yourMessage}]. You may choose not to reply for any reason. In that case, output N/A as yourMessage. Here is the last part of the conversation. : ${JSON.stringify(context)}`
 
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
         })
 
-        const reply = response.choices[0].message.content
+        const reply = JSON.parse(response.choices[0].message.content)
 
-        webhook.send(reply)
+        webhook.send(reply.content)
     })
 })
 
