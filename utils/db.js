@@ -16,6 +16,7 @@ const Users = {
         return await supabase.from('users').select('*')
     },
     create: async (user) => {
+        console.log(user)
         return await supabase.from('users').insert(Object[user].keys.map(key => {key, user[key]})).select('*')
     },
     update: async (user) => {
