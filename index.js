@@ -6,7 +6,17 @@ const env = require('dotenv').config().parsed
 const BOT_TOKEN = env.BOT_TOKEN
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages]
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildWebhooks,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.DirectMessageReactions
+        GatewayIntentBits.MessageContent,
+
+    ]
 })
 
 client.commands = new Collection();
@@ -30,9 +40,6 @@ client.once(Events.ClientReady, () => {
 
 client.on(Events.InteractionCreate, async interaction => {
     console.log('interaction', interaction)
-})
-client.on(Events.MessageCreate, async message => {
-    console.log('message', message)
 })
 
 client.login(BOT_TOKEN).then(() => {
