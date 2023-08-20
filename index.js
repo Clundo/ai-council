@@ -41,7 +41,7 @@ client.once(Events.ClientReady, () => {
 client.on(Events.MessageCreate, async message => {
     if(message.author.bot) return
     const channel = message.channel;
-    channel.send(`${message.content}, eh, <@${message.author.username}>?`);
+    channel.send(`${message.content}, eh, <@${message.author.id}>?`);
 })
 
 client.login(BOT_TOKEN).then(() => {
