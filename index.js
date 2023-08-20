@@ -69,10 +69,10 @@ client.on(Events.MessageCreate, async message => {
 
     const channel = await client.channels.fetch(message.channelId)
     let humanPresent = false
-    const context = await channel.messages.fetch({limit: 5}).then(messages => messages.reverse().reduce((acc, msg) => {
+    const context = await channel.messages.fetch({limit: 5}).then(messages => messages.reverse().map((msg) => {
         if(!msg.author.bot) humanPresent = true
-        return acc + msg.author.username + ': ' + msg.content + '\n'
-    }, ''))
+        return {author: msg.author.username, content: msg.content}
+    })).toString()
 
     if(!humanPresent) return
 
