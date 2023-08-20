@@ -83,7 +83,7 @@ client.on(Events.MessageCreate, async message => {
     const webhooks = await channel.fetchWebhooks()
     while (webhooks.length > 0) {
         const webhookIndex = Math.floor(Math.random() * webhooks.length)
-        setTimeout(() => {
+        setTimeout(async () => {
             if (webhook.name === message.author.username) return
             const prompt = `
         In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Respond with only the content part, not the author, and do not repeat previous replies unless specifically asked. Here is the last part of the conversation. : ${JSON.stringify(context)}`
