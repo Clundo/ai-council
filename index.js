@@ -68,8 +68,7 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on(Events.MessageCreate, async message => {
-    const personas = await message.channel.fetchWebHooks()
-    console.log(personas)
+    console.log(message)
 })
 
 client.login(BOT_TOKEN).then(() => {
