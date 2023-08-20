@@ -82,14 +82,14 @@ client.on(Events.MessageCreate, async message => {
         You are ${webhook.name} and should act like this persona, while answering as briefly as possible.
          You may choose not to answer for any reason, for instance because there is no question in the prompt, 
          because the information does not concern you or for any other reason. 
-         In that case, please just output "N/A". Here is an array of the last part of the conversation: ${context}`
+         In that case, please just output "N/A". Here is the last part of the conversation : ${context}`
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
         })
 
         const reply = response.choices[0].message.content
 
-        reply !== 'N/A' && webhook.send(reply)
+        webhook.send(reply)
     })
 })
 
