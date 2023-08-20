@@ -66,7 +66,6 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on(Events.MessageCreate, async message => {
-    if (message.author.bot) return
     const channel = await client.channels.fetch(message.channelId)
     let humanPresent = false
     const messages = await channel.messages.fetch({limit: 5})
