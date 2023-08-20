@@ -74,8 +74,10 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on(Events.MessageCreate, async message => {
-
+    if (message.author.bot) return
     const channel = await client.channels.fetch(message.channelId)
+    const context = await channel.messages.fetch({limit: 5})
+    console.log(context)
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
         if(webhook.name === message.author.name) return
