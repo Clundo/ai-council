@@ -18,3 +18,4 @@ module.exports = {
             await interaction.reply('AI Council is started. You can now add AI personas by using the /addPersona command!');
         }
     }
+}
