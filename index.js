@@ -83,7 +83,7 @@ client.on(Events.MessageCreate, async message => {
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.username) return
         const prompt = `
-        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Respond with only the content part, not the author, and do not repeat previous replies unless specifically asked. You may choose not to reply if the context does not concern you, but this should be in rare cases. In that case, output N/A as your message. Here is the last part of the conversation. : ${JSON.stringify(context)}`
+        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Respond with only the content part, not the author, and do not repeat previous replies unless specifically asked. Here is the last part of the conversation. : ${JSON.stringify(context)}`
 
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
