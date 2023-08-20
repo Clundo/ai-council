@@ -81,7 +81,7 @@ client.on(Events.MessageCreate, async message => {
         const prompt = `
         In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Here is the last part of the conversation, which you may choose to use : ${context}`
         const response = await openai.chat.completions.create({
-            messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
+            messages: [{role: 'user', content: prompt}], model: 'gpt-4'
         })
 
         const reply = response.choices[0].message.content
