@@ -40,9 +40,8 @@ client.once(Events.ClientReady, async () => {
 });
 
 client.on(Events.InteractionCreate, async interaction => {
-    console.log(interaction.user.id, typeof interaction.user.id)
     let {data: user} = await Users.getOneByDiscordId(interaction.user.id)
-    if(!user) {
+    if(!user.length) {
         const userData = await Users.create({discord_id: interaction.user.id})
         user = userData.data
     }
