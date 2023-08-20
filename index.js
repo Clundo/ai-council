@@ -79,7 +79,7 @@ client.on(Events.MessageCreate, async message => {
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.name) return
         const prompt = `
-        You are ${webhook.name} and should act like this persona, while answering as briefly as possible. Here is the last part of the conversation : ${context}`
+        In this conversation you are role playing as ${webhook.name} and should stay in character, while answering as briefly as possible. Here is the last part of the conversation : ${context}`
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
         })
