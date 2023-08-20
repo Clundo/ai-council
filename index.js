@@ -79,7 +79,8 @@ client.on(Events.MessageCreate, async message => {
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.name) return
         const prompt = `
-        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Here is the last part of the conversation, which you may choose to use : ${context}`
+        In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Here is the last part of the conversation, which you may choose to use : ${context.toString()}`
+
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}], model: 'gpt-4'
         })
