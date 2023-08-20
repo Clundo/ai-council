@@ -81,7 +81,7 @@ client.on(Events.MessageCreate, async message => {
     if (!humanPresent) return
 
     const webhooks = await channel.fetchWebhooks()
-    console.log(webhooks.length)
+    console.log(webhooks)
     while (webhooks.length > 0) {
         console.log(webhooks)
         const webhookIndex = Math.floor(Math.random() * webhooks.length)
