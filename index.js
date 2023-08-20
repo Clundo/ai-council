@@ -83,9 +83,8 @@ client.on(Events.MessageCreate, async message => {
                 messages: [{role: 'user', content: prompt}],
                 model: 'gpt-3.5-turbo'
             })
-
             const reply = response.choices[0].content
-            await webhook.send(reply)
+        console.log(reply)
         }
     )
 })
