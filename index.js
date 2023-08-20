@@ -68,6 +68,11 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on(Events.MessageCreate, async message => {
+    const channel = await client.channels.fetch(message.channelId)
+    if(channel?.isText()){
+        const webhooks = await channel.fetchWebhooks()
+        console.log(webhooks)
+    }
     console.log(message)
 })
 
