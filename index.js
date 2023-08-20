@@ -2,12 +2,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {Client, GatewayIntentBits, Events, Collection} = require('discord.js');
 const env = require('dotenv').config().parsed
-const OpenAi = require('openai')
+const OpenAI = require('openai')
 const {Users, Channels} = require('./utils/db')
 
 const BOT_TOKEN = env.BOT_TOKEN
 
-const openai = new OpenAi({apiKey: env.AI_Key})
+const openai = new OpenAI({
+    apiKey: env.AI_KEY
+})
+
 
 const client = new Client({
     intents: [
