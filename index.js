@@ -45,7 +45,7 @@ client.on(Events.InteractionCreate, async interaction => {
         const userData = await Users.create({discord_id: interaction.user.id})
         user = userData.data
     }
-    console.log(user)
+    
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
