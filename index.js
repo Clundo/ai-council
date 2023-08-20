@@ -81,7 +81,7 @@ client.on(Events.MessageCreate, async message => {
 
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
-        if (webhook.name === message.author.name) return
+        if (webhook.name === message.author.username) return
         const prompt = `
         In this conversation you should act as ${webhook.name}. This should be a natural conversation, so please reply as briefly and concisely as possible, maximum 200 characters. Respond with only the content part, not the author. You may choose not to reply if the context does not concern you. In that case, output N/A as your message. Here is the last part of the conversation. : ${JSON.stringify(context)}`
 
