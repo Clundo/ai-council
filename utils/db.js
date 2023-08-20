@@ -17,10 +17,10 @@ const Users = {
     },
     create: async (user) => {
         console.log(user)
-        return await supabase.from('users').insert(Object[user].keys.map(key => {key, user[key]})).select('*')
+        return await supabase.from('users').insert(Object.keys(user).map(key => {key, user[key]})).select('*')
     },
     update: async (user) => {
-        return await supabase.from('users').update(Object[user].keys.map(key => {key, user[key]})).select('*').eq('id', user.id)
+        return await supabase.from('users').update(Object.keys(user).map(key => {key, user[key]})).select('*').eq('id', user.id)
     },
     delete: async (id) => {
         return await supabase.from('users').delete().select('*').eq('id', id)
@@ -38,10 +38,10 @@ const Channels = {
         return await supabase.from('channels').select('*')
     },
     create: async (channel) => {
-        return await supabase.from('channels').insert(Object[channel].keys.map(key => {key, channel[key]})).select('*')
+        return await supabase.from('channels').insert(Object.keys(channel).map(key => {key, channel[key]})).select('*')
     },
     update: async (channel) => {
-        return await supabase.from('channels').update(Object[channel].keys.map(key => {key, channel[key]})).select('*').eq('id', channel.id)
+        return await supabase.from('channels').update(Object.keys(channel).map(key => {key, channel[key]})).select('*').eq('id', channel.id)
     },
     delete: async (id) => {
         return await supabase.from('channels').delete().select('*').eq('id', id)
