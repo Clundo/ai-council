@@ -38,10 +38,8 @@ client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.on(Events.MessageCreate, async message => {
-    if(message.author.bot) return
-    const channel = message.channel;
-    channel.send(`${message.content}, eh, <@${message.author.id}>?`);
+client.on(Events.InteractionCreate, async interaction => {
+    console.log(interaction)
 })
 
 client.login(BOT_TOKEN).then(() => {
