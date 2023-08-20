@@ -69,13 +69,16 @@ client.on(Events.MessageCreate, async message => {
 
     const channel = await client.channels.fetch(message.channelId)
     let humanPresent = false
-    const context = await channel.messages.fetch({limit: 5}).then(messages => messages.reverse().map((msg) => {
-        if(!msg.author.bot) humanPresent = true
+    const messages = await channel.messages.fetch({limit: 5})
+    messages.reverse()
+    const context = messages.map((msg) => {
+        if (!msg.author.bot) humanPresent = true
         return {author: msg.author.username, content: msg.content}
-    })).toString()
+    }).toString()
+
 
     console.log(context)
-    if(!humanPresent) return
+    if (!humanPresent) return
 
     const webhooks = await channel.fetchWebhooks()
     webhooks.forEach(async webhook => {
