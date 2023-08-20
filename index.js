@@ -69,8 +69,8 @@ client.on(Events.InteractionCreate, async interaction => {
 
 client.on(Events.MessageCreate, async message => {
     const channel = await client.channels.fetch(message.channelId)
-
-    console.log(channel)
+    const webhooks = await channel.fetchWebhooks()
+    console.log(webhooks)
 })
 
 client.login(BOT_TOKEN).then(() => {
