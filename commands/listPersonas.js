@@ -3,7 +3,7 @@ const {Users, Channels} = require('../utils/db');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('listPersonas')
+        .setName('list-personas')
         .setDescription('Lists all active personas of your AI council.'),
     async execute(interaction) {
         let userData = await Users.getOneByDiscordId(interaction.user.id);
