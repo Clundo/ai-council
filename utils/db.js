@@ -33,11 +33,11 @@ const Channels = {
     getAll: async () => {
         return await supabase.from('channels').select('*')
     },
-    create: async ({channel, user}) => {
+    create: async ({discord_id, user}) => {
         return await supabase.from('channels').insert([{discord_id, owner_id: user.discord_id}]).select('*')
     },
-    delete: async (id) => {
-        return await supabase.from('channels').delete().select('*').eq('id', id)
+    delete: async ({discord_id, user}) => {
+        return await supabase.from('channels').delete().select('*').eq('id', id).eq('owner_id', user.id)
     }
 }
 
