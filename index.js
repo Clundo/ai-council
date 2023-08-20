@@ -73,7 +73,7 @@ client.on(Events.MessageCreate, async message => {
     messages.reverse()
     const context = messages.reduce((acc, msg) => {
         if (!msg.author.bot) humanPresent = true
-        return acc.push({author: msg.author.username, content: msg.content})
+        return [...acc, {author: msg.author.username, content: msg.content}]
     }, [])
 
 
