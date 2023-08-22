@@ -94,11 +94,8 @@ client.on(Events.MessageCreate, async message => {
 
         const reply = response.choices[0].message.content
 
-        const parsed = JSON.parse(reply)
-        memory = parsed.memory
-        console.log(parsed)
 
-        webhook.send(parsed.output)
+        webhook.send(reply)
     })
 })
 
