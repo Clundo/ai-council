@@ -78,10 +78,9 @@ client.on(Events.MessageCreate, async message => {
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.username) return
         const instruction = `
-        Act as ${webhook.name}. 
-        This is a natural conversation with brief and concise replies. 
-        You should summarize the memory and conversation in 1-2 sentences as well as provide a reply.
-        The memory is a summary of our conversation so far: ${memory}
+        Act as ${webhook.name}. It is important to be brief and concise and to stay in character.
+        Do not ask how you can assist me further or how you can help me. Do not ask me if I have any questions. Do not mention that you are an AI language model.
+        The memory is provided for context and is a summary of our conversation so far: ${memory}
         `
 
         const response = await openai.chat.completions.create({
