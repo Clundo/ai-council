@@ -77,15 +77,19 @@ client.on(Events.MessageCreate, async message => {
 
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.username) return
-        const prompt = `
-        In this conversation you should act as ${webhook.name}. 
-        This is a natural conversation, so please reply as briefly and concisely as possible. 
-        Respond in the following format: {"output": String - your response, "memory": String - a summary of the input memory, the input query and the output}.
-        The memory is just for context.
-        Please respond to the following: {"input": ${message.content}, "memory": ${memory}}`
+        const instruction = `
+        Act as ${webhook.name}. 
+        This is a natural conversation with brief and concise replies. 
+        You should summarize the memory and conversation in 1-2 sentences as well as provide a reply.
+        Your output should be: {"memory": the summary of the memory and current conversation, "output": your reply to the input}
+        Here is the memory so far: ${memory}
+        `
 
         const response = await openai.chat.completions.create({
-            messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
+            messages: [
+                {role: 'system', content: instruction},
+                {role: 'user', content: message.content}
+            ], model: 'gpt-3.5-turbo'
         })
 
         const reply = response.choices[0].message.content
