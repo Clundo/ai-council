@@ -81,8 +81,7 @@ client.on(Events.MessageCreate, async message => {
         Act as ${webhook.name}. 
         This is a natural conversation with brief and concise replies. 
         You should summarize the memory and conversation in 1-2 sentences as well as provide a reply.
-        Your output should be: {"memory": the summary of the memory and current conversation, "output": your reply to the input}
-        Here is the memory so far: ${memory}
+        The memory is a summary of our conversation so far: ${memory}
         `
 
         const response = await openai.chat.completions.create({
@@ -94,6 +93,13 @@ client.on(Events.MessageCreate, async message => {
 
         const reply = response.choices[0].message.content
 
+        memory = `${memory}, user: ${message.content}, ${webhook.name}: ${reply}`
+
+        memory.length > 400 && await openai.chat.completions.create({
+            messages: [
+                {role: 'system', content: 'Summarize this: ' + memory},'},
+        }}], model: 'gpt-3.5-turbo'
+        }).then(response => memory = response.choices[0].message.content)
 
         webhook.send(reply)
     })
