@@ -65,29 +65,21 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 });
 
+
+let memory = ''
+
 client.on(Events.MessageCreate, async message => {
     if (message.author.bot) return
-    const channel = await client.channels.fetch(message.channelId)
-    let humanPresent = false
-    const messages = await channel.messages.fetch({limit: 5})
-    messages.reverse()
-    const context = messages.reduce((acc, msg) => {
-        if (!msg.author.bot) humanPresent = true
-        return [...acc, {author: msg.author.username, content: msg.content}]
-    }, [])
-
-
-    console.log(context)
-    if (!humanPresent) return
 
     const webhooks = await channel.fetchWebhooks()
-
-    let i = 0
 
     webhooks.forEach(async webhook => {
         if (webhook.name === message.author.username) return
         const prompt = `
-        In this conversation you should act as ${webhook.name}. This is a natural conversation, so please reply as briefly and concisely as possible. Respond with a string containing only your reply. Here is the last part of the conversation. Only the last message is from the user. The rest is for context. : ${JSON.stringify(context)}`
+        In this conversation you should act as ${webhook.name}. 
+        This is a natural conversation, so please reply as briefly and concisely as possible. 
+        Respond in the following format: {output: yourResponse as a string, memory: a summary of the existing memory combined with my input and your output in a string format} 
+        Please respond to the following: ${input: message.content, memory}`
 
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}], model: 'gpt-3.5-turbo'
@@ -95,9 +87,11 @@ client.on(Events.MessageCreate, async message => {
 
         const reply = response.choices[0].message.content
 
-        console.log(response.choices)
-        i++
-        reply !== 'N/A' && setTimeout(() => webhook.send(reply), i * 1000)
+        const parsed = JSON.parse(reply)
+        memory = parsed.memory
+        console.log(parsed)
+
+        webhook.send(parsed.output)
     })
 })
 
