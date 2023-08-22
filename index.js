@@ -71,6 +71,8 @@ let memory = ''
 client.on(Events.MessageCreate, async message => {
     if (message.author.bot) return
 
+    const channel = await client.channels.fetch(message.channelId)
+
     const webhooks = await channel.fetchWebhooks()
 
     webhooks.forEach(async webhook => {
