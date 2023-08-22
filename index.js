@@ -97,8 +97,8 @@ client.on(Events.MessageCreate, async message => {
 
         memory.length > 400 && await openai.chat.completions.create({
             messages: [
-                {role: 'system', content: 'Summarize this: ' + memory},'},
-        }}], model: 'gpt-3.5-turbo'
+                {role: 'system', content: 'Summarize this: ' + memory}
+        ], model: 'gpt-3.5-turbo'
         }).then(response => memory = response.choices[0].message.content)
 
         webhook.send(reply)
