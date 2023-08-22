@@ -80,7 +80,7 @@ client.on(Events.MessageCreate, async message => {
         const prompt = `
         In this conversation you should act as ${webhook.name}. 
         This is a natural conversation, so please reply as briefly and concisely as possible. 
-        Respond in the following format: {{output: yourResponse as a string, memory: a summary of the existing memory combined with my input and your output in a string format}} 
+        Respond in the following format: "{output: yourResponse as a string, memory: a summary of the existing memory combined with my input and your output in a string format}"
         Please respond to the following: {input: ${message.content}, memory: ${memory}}`
 
         const response = await openai.chat.completions.create({
